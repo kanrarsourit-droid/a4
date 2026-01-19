@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Laundry Service Web App</title>
+    
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
+    <script type="text/javascript">
+        (function() {
+            // Your Public Key is initialized here
+            emailjs.init("w0jItfUy2L0_0ZCxA"); 
+        })();
+    </script>
+
+    <style>
+        /* CSS STYLES */
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
+        body { background-color: #f9f9f9; color: #333; scroll-behavior: smooth; }
+        
+        /* Navbar */
+        .navbar { display: flex; justify-content: space-between; align-items: center; padding: 15px 50px; background-color: #2c3e50; color: white; position: sticky; top: 0; z-index: 100; }
+        .logo { font-size: 1.5rem; font-weight: bold; color: #3498db; }
+        .nav-links { list-style: none; display: flex; gap: 20px; }
+        .nav-links a { text-decoration: none; color: white; transition: 0.3s; }
+        .nav-links a:hover { color: #3498db; }
+
+        /* Hero Section */
+        .hero { display: flex; height: 90vh; width: 100%; }
+        .hero-left { flex: 1; background-color: #ecf0f1; display: flex; flex-direction: column; justify-content: center; padding: 0 60px; }
+        .hero-left h1 { font-size: 3rem; margin-bottom: 20px; color: #2c3e50; }
+        .hero-left button { padding: 15px 30px; background-color: #3498db; color: white; border: none; font-size: 1rem; cursor: pointer; border-radius: 5px; transition: background 0.3s; }
+        .hero-left button:hover { background-color: #2980b9; }
+        .hero-right { flex: 1; }
+        .hero-right img { width: 100%; height: 100%; object-fit: cover; }
+
+        /* Stats Section */
+        .stats-container { display: flex; justify-content: space-around; padding: 40px; background-color: #3498db; color: white; }
+        .stat-box { text-align: center; }
+        .stat-box h3 { font-size: 2.5rem; margin-bottom: 5px; }
+
+        /* Booking Section */
+        .booking-section { display: flex; padding: 50px; gap: 30px; flex-wrap: wrap; background-color: white; }
+        .booking-left { flex: 3; }
+        .booking-right { flex: 2; display: flex; flex-direction: column; gap: 20px; }
+        
+        .service-item { display: flex; justify-content: space-between; align-items: center; background: #f8f9fa; padding: 15px; margin-bottom: 10px; border-radius: 5px; border: 1px solid #dee2e6; }
+        .btn-add { background: #27ae60; color: white; border: none; padding: 8px 12px; cursor: pointer; border-radius: 4px; }
+        .btn-remove { background: #e74c3c; color: white; border: none; padding: 8px 12px; cursor: pointer; margin-right: 5px; border-radius: 4px; }
+
+        .cart-box, .booking-form-box { background: white; padding: 25px; border-radius: 8px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); border: 1px solid #eee; }
+        .cart-item-display { display: flex; justify-content: space-between; border-bottom: 1px solid #eee; padding-bottom: 5px; margin-bottom: 5px; }
+        
+        /* Form */
+        .booking-form-box input { width: 100%; padding: 12px; margin: 10px 0; border: 1px solid #ccc; border-radius: 4px; }
+        .book-btn { width: 100%; padding: 12px; background-color: #2c3e50; color: white; border: none; cursor: pointer; border-radius: 4px; font-size: 1rem; transition: 0.3s; }
+        .book-btn:hover { background-color: #1a252f; }
+        
+        /* Quality Section */
+        .quality-section { padding: 60px 50px; background-color: #fff; text-align: center; }
+        .quality-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 30px; margin-top: 40px; }
+        .quality-card { padding: 30px; border: 1px solid #eee; border-radius: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.05); transition: transform 0.3s; }
+        .quality-card:hover { transform: translateY(-5px); }
+        
+        /* Newsletter */
+        .newsletter { padding: 60px; background-color: #ecf0f1; text-align: center; }
+        .newsletter input { padding: 12px; width: 250px; margin: 10px; border: 1px solid #ccc; border-radius: 4px; }
+        .newsletter button { padding: 12px 25px; background-color: #e67e22; color: white; border: none; border-radius: 4px; cursor: pointer; }
+
+        /* Footer */
+        footer { background-color: #2c3e50; color: white; padding: 50px; display: flex; justify-content: space-between; flex-wrap: wrap; gap: 20px; }
+        footer a { color: #bdc3c7; text-decoration: none; display: block; margin-bottom: 8px; }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero { flex-direction: column; height: auto; }
+            .hero-left { padding: 40px 20px; text-align: center; }
+            .booking-section { flex-direction: column; padding: 20px; }
+        }
+    </style>
+</head>
+<body>
+
+    <nav class="navbar">
+        <div class="logo">CleanFinish</div>
+        <ul class="nav-links">
+            <li><a href="#home">Home</a></li>
+            <li><a href="#services">Services</a></li>
+            <li><a href="#about">About Us</a></li>
+            <li><a href="#contact">Contact Us</a></li>
+        </ul>
+        <div class="user-name">Welcome, User</div>
+    </nav>
+
+    <header id="home" class="hero">
+        <div class="hero-left">
+            <h1>Professional Laundry Services</h1>
+            <p>Experience premium fabric care. We pick up, clean, and deliver your clothes fresh and crisp.</p>
+            <br>
+            <button onclick="document.getElementById('services').scrollIntoView({ behavior: 'smooth' })">Book a Service Today</button>
+        </div>
+        <div class="hero-right">
+            <img src="https://images.unsplash.com/photo-1582735689369-4fe89db7114c?q=80&w=1000&auto=format&fit=crop" alt="Laundry">
+        </div>
+    </header>
+
+    <section class="stats-container">
+        <div class="stat-box"><h3>15+</h3><p>Laundry Services</p></div>
+        <div class="stat-box"><h3>240+</h3><p>Happy Customers</p></div>
+        <div class="stat-box"><h3>2+</h3><p>Years Experience</p></div>
+    </section>
+
+    <section id="services" class="booking-section">
+        <div class="booking-left">
+            <h2>Our Services</h2>
+            <p style="color: #666; margin-bottom: 15px;">Add items to cart to proceed.</p>
+            <div id="services-container"></div>
+        </div>
+
+        <div class="booking-right">
+            <div class="cart-box">
+                <h3>Your Cart</h3>
+                <div id="cart-items" style="margin-top: 15px; min-height: 40px;"><p style="color: #999;">No items added yet.</p></div>
+                <h4 style="text-align: right; margin-top: 15px; border-top: 1px solid #eee; padding-top: 10px;">Total: ₹<span id="total-amount">0</span></h4>
+            </div>
+
+            <div class="booking-form-box">
+                <h3>Book Now</h3>
+                <form id="bookingForm" onsubmit="handleBooking(event)">
+                    <input type="text" id="user_name" placeholder="Full Name" required>
+                    <input type="email" id="user_email" placeholder="Email Address" required>
+                    <input type="tel" id="user_phone" placeholder="Phone Number" required>
+                    <button type="submit" class="book-btn">Book Now</button>
+                </form>
+                <p id="success-message" style="display: none; color: green; margin-top: 15px; background: #e8f5e9; padding: 10px; border-radius: 4px; text-align: center;">
+                    Thank you For Booking the Service! We will get back to you soon.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <section id="about" class="quality-section">
+        <h2>Why Choose Us?</h2>
+        <div class="quality-grid">
+            <div class="quality-card"><h3>Premium Services</h3><p>High-quality detergents.</p></div>
+            <div class="quality-card"><h3>Quick Support</h3><p>24/7 customer service.</p></div>
+            <div class="quality-card"><h3>Timely Delivery</h3><p>Back within 24 hours.</p></div>
+            <div class="quality-card"><h3>Affordable Prices</h3><p>Best rates in market.</p></div>
+        </div>
+    </section>
+
+    <section class="newsletter">
+        <h2>Subscribe to our Newsletter</h2>
+        <div style="margin-top: 20px;">
+            <input type="text" placeholder="Your Name">
+            <input type="email" placeholder="Your Email">
+            <button>Subscribe</button>
+        </div>
+    </section>
+
+    <footer id="contact">
+        <div><h3>CleanFinish</h3></div>
+        <div><a href="#">About Us</a><a href="#">FAQ</a><a href="#">Terms of Service</a></div>
+        <div><a href="#">Contact Us</a><div style="margin-top: 10px;"><span>Facebook</span> | <span>Twitter</span></div></div>
+    </footer>
+
+    <script>
+        const services = [
+            { id: 1, name: "Dry Cleaning", price: 200 },
+            { id: 2, name: "Wash & Fold", price: 100 },
+            { id: 3, name: "Ironing", price: 50 },
+            { id: 4, name: "Stain Removal", price: 150 },
+            { id: 5, name: "Leather Care", price: 300 }
+        ];
+
+        let cart = [];
+
+        // Render Services
+        const container = document.getElementById('services-container');
+        services.forEach(s => {
+            container.innerHTML += `
+                <div class="service-item">
+                    <span><strong>${s.name}</strong> - ₹${s.price}</span>
+                    <div>
+                        <button class="btn-remove" onclick="modifyCart(${s.id}, 'remove')">Remove</button>
+                        <button class="btn-add" onclick="modifyCart(${s.id}, 'add')">Add Item</button>
+                    </div>
+                </div>`;
+        });
+
+        // Add/Remove Logic
+        function modifyCart(id, action) {
+            if (action === 'add') {
+                cart.push(services.find(s => s.id === id));
+            } else {
+                const idx = cart.findIndex(s => s.id === id);
+                if (idx > -1) cart.splice(idx, 1);
+            }
+            updateCart();
+        }
+
+        // Update Cart UI
+        function updateCart() {
+            const cartDiv = document.getElementById('cart-items');
+            const totalSpan = document.getElementById('total-amount');
+            
+            if (cart.length === 0) {
+                cartDiv.innerHTML = '<p style="color: #999;">No items added yet.</p>';
+                totalSpan.innerText = '0';
+                return;
+            }
+
+            cartDiv.innerHTML = '';
+            let total = 0;
+            cart.forEach(item => {
+                total += item.price;
+                cartDiv.innerHTML += `<div class="cart-item-display"><span>${item.name}</span><span>₹${item.price}</span></div>`;
+            });
+            totalSpan.innerText = total;
+        }
+
+        // Handle Booking
+        function handleBooking(e) {
+            e.preventDefault();
+            if (cart.length === 0) { alert("Cart is empty!"); return; }
+
+            const btn = document.querySelector('.book-btn');
+            btn.innerText = "Sending...";
+            btn.disabled = true;
+
+            const params = {
+                from_name: document.getElementById('user_name').value,
+                user_email: document.getElementById('user_email').value,
+                phone: document.getElementById('user_phone').value,
+                total: document.getElementById('total-amount').innerText,
+                cart_details: cart.map(i => i.name).join(', ')
+            };
+
+            // Using your provided Service ID and Template ID
+            emailjs.send("service_sourit", "template_gyrzdj3", params)
+                .then(() => {
+                    document.getElementById('success-message').style.display = 'block';
+                    btn.innerText = "Book Now";
+                    btn.disabled = false;
+                    cart = []; 
+                    updateCart();
+                    document.getElementById('bookingForm').reset();
+                })
+                .catch((err) => {
+                    alert("Failed to send. Please check your internet or EmailJS quota.");
+                    console.error(err);
+                    btn.innerText = "Book Now";
+                    btn.disabled = false;
+                });
+        }
+    </script>
+</body>
+</html>
